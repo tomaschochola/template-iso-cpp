@@ -26,8 +26,8 @@ never:
 
 # Options
 
-COMPOSE_PROJECT_NAME ?= template-iso-c-$(shell pwd -P | sha256sum | cut -c1-16)
-CFLAGS ?=
+COMPOSE_PROJECT_NAME ?= template-iso-cpp-$(shell pwd -P | sha256sum | cut -c1-16)
+CXXFLAGS ?=
 LDFLAGS ?=
 DESTDIR ?=
 VERSION ?= $(shell v=$$(git describe --tags --abbrev=0 2>/dev/null || echo 0.0.0); v=$${v#v}; echo "$$v")
@@ -37,11 +37,11 @@ SUDO ?= sudo
 
 DEVCONTAINER_COMPOSE := ./.devcontainer/docker-compose.yml
 DEVCONTAINER_TMPDIR := $(CURDIR)/.devcontainer/.tmp
-CC := gcc
+CXX := g++
 LC_ALL := C.UTF-8
 
-export CC
-export CFLAGS
+export CXX
+export CXXFLAGS
 export LDFLAGS
 export LC_ALL
 export VERSION
@@ -57,7 +57,7 @@ fix: prettier_fix clang_format_fix trimmer_fix
 check: devcontainer_gate doctor lint headers test all verify audit
 
 .PHONY: extended
-extended: check fanalyzer valgrind sanitize coverage
+extended: check valgrind sanitize coverage
 
 .PHONY: doctor
 doctor: git_check npm_config_check npm_doctor npm_check toolchain_check
@@ -80,10 +80,6 @@ headers: devcontainer_gate
 .PHONY: debug
 debug:
 	cmake --workflow --preset build-debug
-
-.PHONY: fanalyzer
-fanalyzer: devcontainer_gate
-	cmake --workflow --preset fanalyzer
 
 .PHONY: coverage
 coverage: devcontainer_gate
@@ -266,11 +262,11 @@ prettier_check: ./node_modules/.package-lock.json ./package.json ./package-lock.
 
 .PHONY: clang_format_fix
 clang_format_fix: ./.clang-format
-	find ./src ./tests -type f '(' -name '*.c' -o -name '*.h' ')' -print0 | xargs -0 -r clang-format -i --style=file --
+	find ./src ./tests -type f '(' -name '*.cpp' -o -name '*.h' -o -name '*.hpp' ')' -print0 | xargs -0 -r clang-format -i --style=file --
 
 .PHONY: clang_format_check
 clang_format_check: ./.clang-format
-	find ./src ./tests -type f '(' -name '*.c' -o -name '*.h' ')' -print0 | xargs -0 -r clang-format -n --Werror --style=file --
+	find ./src ./tests -type f '(' -name '*.cpp' -o -name '*.h' -o -name '*.hpp' ')' -print0 | xargs -0 -r clang-format -n --Werror --style=file --
 
 .PHONY: npm_config_check
 npm_config_check: ./.npmrc
@@ -319,7 +315,7 @@ git_check:
 .PHONY: toolchain_check
 toolchain_check:
 	cmake --version
-	gcc --version
+	g++ --version
 	ninja --version
 	ctest --version
 	valgrind --version

@@ -18,7 +18,7 @@
                 "rhs": "Linux"
             },
             "cacheVariables": {
-                "CMAKE_C_FLAGS": "$env{CFLAGS}",
+                "CMAKE_CXX_FLAGS": "$env{CXXFLAGS}",
                 "CMAKE_COMPILE_WARNING_AS_ERROR": true,
                 "CMAKE_LINK_WARNING_AS_ERROR": true,
                 "CMAKE_EXE_LINKER_FLAGS": "$env{LDFLAGS}",
@@ -51,7 +51,7 @@
             "cacheVariables": {
                 "BUILD_TESTING": true,
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_C_FLAGS_DEBUG": "-Og -g3 -fno-omit-frame-pointer"
+                "CMAKE_CXX_FLAGS_DEBUG": "-Og -g3 -fno-omit-frame-pointer"
             }
         },
         {
@@ -79,80 +79,73 @@
             }
         },
         {
-            "name": "fanalyzer",
-            "inherits": "debug-base",
-            "cacheVariables": {
-                "CMAKE_C_FLAGS_DEBUG": "-O0 -g -fanalyzer"
-            }
-        },
-        {
             "name": "asan",
             "inherits": "debug-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS_DEBUG": "-Og -g -fno-omit-frame-pointer -fsanitize=address"
+                "CMAKE_CXX_FLAGS_DEBUG": "-Og -g -fno-omit-frame-pointer -fsanitize=address"
             }
         },
         {
             "name": "ubsan",
             "inherits": "debug-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS_DEBUG": "-Og -g -fno-omit-frame-pointer -fsanitize=undefined -fno-sanitize-recover=undefined"
+                "CMAKE_CXX_FLAGS_DEBUG": "-Og -g -fno-omit-frame-pointer -fsanitize=undefined -fno-sanitize-recover=undefined"
             }
         },
         {
             "name": "tsan",
             "inherits": "debug-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS_DEBUG": "-Og -g -fno-omit-frame-pointer -fsanitize=thread"
+                "CMAKE_CXX_FLAGS_DEBUG": "-Og -g -fno-omit-frame-pointer -fsanitize=thread"
             }
         },
         {
             "name": "lsan",
             "inherits": "debug-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS_DEBUG": "-Og -g -fno-omit-frame-pointer -fsanitize=leak"
+                "CMAKE_CXX_FLAGS_DEBUG": "-Og -g -fno-omit-frame-pointer -fsanitize=leak"
             }
         },
         {
             "name": "valgrind",
             "inherits": "debug-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS_DEBUG": "-O0 -g"
+                "CMAKE_CXX_FLAGS_DEBUG": "-O0 -g"
             }
         },
         {
             "name": "coverage",
             "inherits": "debug-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS_DEBUG": "-O0 -g --coverage -fcondition-coverage -fpath-coverage -fprofile-abs-path"
+                "CMAKE_CXX_FLAGS_DEBUG": "-O0 -g --coverage -fcondition-coverage -fpath-coverage -fprofile-abs-path"
             }
         },
         {
             "name": "linux-amd64-v1",
             "inherits": "release-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS": "$env{CFLAGS} -march=x86-64"
+                "CMAKE_CXX_FLAGS": "$env{CXXFLAGS} -march=x86-64"
             }
         },
         {
             "name": "linux-amd64-v2",
             "inherits": "release-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS": "$env{CFLAGS} -march=x86-64-v2"
+                "CMAKE_CXX_FLAGS": "$env{CXXFLAGS} -march=x86-64-v2"
             }
         },
         {
             "name": "linux-amd64-v3",
             "inherits": "release-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS": "$env{CFLAGS} -march=x86-64-v3"
+                "CMAKE_CXX_FLAGS": "$env{CXXFLAGS} -march=x86-64-v3"
             }
         },
         {
             "name": "native",
             "inherits": "release-base",
             "cacheVariables": {
-                "CMAKE_C_FLAGS": "$env{CFLAGS} -march=native -mtune=native"
+                "CMAKE_CXX_FLAGS": "$env{CXXFLAGS} -march=native -mtune=native"
             }
         }
     ],
@@ -173,10 +166,6 @@
         {
             "name": "verify",
             "configurePreset": "verify"
-        },
-        {
-            "name": "fanalyzer",
-            "configurePreset": "fanalyzer"
         },
         {
             "name": "asan",
@@ -241,11 +230,6 @@
             "name": "verify",
             "inherits": "test-base",
             "configurePreset": "verify"
-        },
-        {
-            "name": "fanalyzer",
-            "inherits": "test-base",
-            "configurePreset": "fanalyzer"
         },
         {
             "name": "asan",
@@ -371,23 +355,6 @@
                 {
                     "type": "test",
                     "name": "verify"
-                }
-            ]
-        },
-        {
-            "name": "fanalyzer",
-            "steps": [
-                {
-                    "type": "configure",
-                    "name": "fanalyzer"
-                },
-                {
-                    "type": "build",
-                    "name": "fanalyzer"
-                },
-                {
-                    "type": "test",
-                    "name": "fanalyzer"
                 }
             ]
         },

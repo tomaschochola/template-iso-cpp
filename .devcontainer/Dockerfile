@@ -37,9 +37,9 @@ COPY --from=cmake /tmp/cmake.tgz /tmp/cmake.tgz
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get upgrade --yes --no-install-recommends \
-    && DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends ca-certificates clang-format gcc-16 gdb git libc6-dev make ninja-build openssh-client python3 strace sudo valgrind \
-    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-16 160 \
-    && update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-16 160 \
+    && DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends ca-certificates clang-format g++-16 gdb git libc6-dev make ninja-build openssh-client python3 strace sudo valgrind \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-16 160 \
+    && update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-16 160 \
     && update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-16 160 \
     && tar --extract --gzip --file /tmp/cmake.tgz --directory /usr/local --strip-components=1 \
     && tar --extract --gzip --file /tmp/node.tgz --directory /usr/local --strip-components=1 --no-same-owner --exclude='*/README.md' --exclude='*/CHANGELOG.md' --exclude='*/LICENSE' \

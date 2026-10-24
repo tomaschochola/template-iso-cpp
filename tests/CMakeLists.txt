@@ -10,7 +10,7 @@ function(add_unit_test test target)
     target_link_libraries(
         ${target}
         PRIVATE
-            template_iso_c_core
+            template_iso_cpp_core
     )
 
     add_test(
@@ -42,5 +42,5 @@ function(add_smoke_test test target)
     )
 endfunction()
 
-add_unit_test(unit.todo template_iso_c_tests test_todo.c)
-add_smoke_test(smoke.program template_iso_c)
+add_unit_test(unit.todo template_iso_cpp_tests test_todo.cpp)
+add_smoke_test(smoke.program template_iso_cpp)
