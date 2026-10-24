@@ -1,5 +1,7 @@
 # AGENTS.md
 
+This application uses ISO C++23 (ISO/IEC 14882:2024) on 64-bit GNU/Linux and is compiled with GCC's `g++`. It uses libstdc++ for the C++ standard library and glibc for the C standard library and GNU/Linux APIs, with `_GNU_SOURCE=1` enabled. CMake builds the application, CTest runs automated tests, and CPack creates binary packages.
+
 ## Target platform
 
 - Operating system: GNU/Linux
@@ -8,8 +10,9 @@
 - Architecture: x86_64 (amd64)
 - Data layout: 64-bit, LP64, little-endian
 - Instruction sets: x86-64-v1, x86-64-v2, x86-64-v3
+- C++ standard library: libstdc++
 - C library: glibc 2.43
-- Interfaces: GNU extensions, Linux-specific interfaces, Linux UAPI, POSIX.1-2024, XSI, ISO C23
+- Interfaces: ISO C++23, ISO C library interfaces, GNU extensions, Linux-specific interfaces, Linux UAPI, POSIX.1-2024, XSI
 
 ## Build tools
 
@@ -20,15 +23,15 @@
 
 ## Language and warnings
 
-- Language: ISO/IEC 9899:2024 C (C23)
-- Standard: `-std=c23`
+- Language: ISO/IEC 14882:2024 C++ (C++23)
+- Standard: `-std=c++23`
 - Warnings: `-Wall -Wextra -Wpedantic -pedantic-errors`
 
 ## glibc API
 
-The build defines [`_GNU_SOURCE=1`](https://www.sourceware.org/glibc/manual/2.43/html_node/Feature-Test-Macros.html) for all C targets, enabling these feature-test macros in glibc 2.43:
+The build defines [`_GNU_SOURCE=1`](https://www.sourceware.org/glibc/manual/2.43/html_node/Feature-Test-Macros.html) for all C++ targets, enabling these feature-test macros in glibc 2.43:
 
-```c
+```cpp
 #define _ISOC95_SOURCE 1
 #define _ISOC99_SOURCE 1
 #define _ISOC11_SOURCE 1
@@ -47,7 +50,7 @@ The build defines [`_GNU_SOURCE=1`](https://www.sourceware.org/glibc/manual/2.43
 
 ## Toolchain versions
 
-- gcc 16.0
+- g++ 16.0
 - glibc 2.43
 - cmake 4.4
 - ninja 1.13
@@ -62,7 +65,10 @@ The build defines [`_GNU_SOURCE=1`](https://www.sourceware.org/glibc/manual/2.43
 
 ## Development environment
 
-The development environment is configured in `.devcontainer/`. Manage it from the repository root on the host using the `devcontainer`, `docker` and `docker compose` CLIs.
+The development environment is configured in `.devcontainer/`. Manage it from the repository root on the host using the Makefile targets or directly through the `devcontainer`, `docker` and `docker compose` CLIs.
+
+- `devcontainer`: `ubuntu` 26.04.
+- `wiremock`: `wiremock/wiremock` 3.13.2.
 
 ```sh
 # start the development environment
@@ -138,31 +144,30 @@ LineEnding: LF
 
 ```text
 .
-|-- AGENTS.md
-|-- AUTHORS.md
 |-- .clang-format
-|-- CMakeLists.txt
-|-- CMakePresets.json
 |-- .devcontainer/
+|   |-- .dockerignore
+|   |-- Dockerfile
 |   |-- devcontainer.json
 |   |-- docker-compose.yml
-|   |-- Dockerfile
-|   `-- .dockerignore
+|   `-- ...
 |-- .editorconfig
 |-- .gitattributes
 |-- .gitignore
+|-- .npmrc
+|-- .prettierignore
+|-- AGENTS.md
+|-- AUTHORS.md
+|-- CMakeLists.txt
+|-- CMakePresets.json
 |-- LICENSE
 |-- Makefile
-|-- .npmrc
-|-- package.json
 |-- package-lock.json
+|-- package.json
 |-- prettier.config.js
-|-- .prettierignore
 |-- src/
-|   |-- CMakeLists.txt
 |   `-- ...
 `-- tests/
-    |-- CMakeLists.txt
     `-- ...
 ```
 
@@ -171,14 +176,13 @@ LineEnding: LF
 - `never`: Require an explicit target.
 - `fix`: `prettier_fix` + `clang_format_fix` + `trimmer_fix`
 - `check`: `devcontainer_gate` + `doctor` + `lint` + `headers` + `test` + `all` + `verify` + `audit`
-- `extended`: `check` + `fanalyzer` + `valgrind` + `sanitize` + `coverage`
+- `extended`: `check` + `valgrind` + `sanitize` + `coverage`
 - `doctor`: `git_check` + `npm_config_check` + `npm_doctor` + `npm_check` + `toolchain_check`
 - `lint`: `prettier_check` + `clang_format_check` + `trimmer_check`
 - `test`: `devcontainer_gate` — Run tests in a debug build.
 - `verify`: `devcontainer_gate` — Run tests in a release build.
 - `headers`: `devcontainer_gate` — Check standalone header compilation.
 - `debug`: Build the debug application.
-- `fanalyzer`: `devcontainer_gate` — Analyze code with GCC.
 - `coverage`: `devcontainer_gate` — Measure and report test coverage.
 - `valgrind`: `devcontainer_gate` — Run tests with Valgrind.
 - `audit`: `npm_audit`
