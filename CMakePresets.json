@@ -74,13 +74,6 @@
             "inherits": "release-base"
         },
         {
-            "name": "verify",
-            "inherits": "release-base",
-            "cacheVariables": {
-                "BUILD_TESTING": true
-            }
-        },
-        {
             "name": "asan",
             "inherits": "debug-base",
             "cacheVariables": {
@@ -166,10 +159,6 @@
             "configurePreset": "release"
         },
         {
-            "name": "verify",
-            "configurePreset": "verify"
-        },
-        {
             "name": "asan",
             "configurePreset": "asan"
         },
@@ -221,6 +210,11 @@
             "execution": {
                 "noTestsAction": "error",
                 "stopOnFailure": true
+            },
+            "filter": {
+                "include": {
+                    "label": "^unit$"
+                }
             }
         },
         {
@@ -229,17 +223,19 @@
             "configurePreset": "debug"
         },
         {
-            "name": "verify",
+            "name": "integration",
             "inherits": "test-base",
-            "configurePreset": "verify"
+            "configurePreset": "debug",
+            "filter": {
+                "include": {
+                    "label": "^integration$"
+                }
+            }
         },
         {
             "name": "asan",
             "inherits": "test-base",
-            "configurePreset": "asan",
-            "environment": {
-                "ASAN_OPTIONS": "detect_leaks=0"
-            }
+            "configurePreset": "asan"
         },
         {
             "name": "ubsan",
@@ -344,19 +340,19 @@
             ]
         },
         {
-            "name": "verify",
+            "name": "integration",
             "steps": [
                 {
                     "type": "configure",
-                    "name": "verify"
+                    "name": "debug"
                 },
                 {
                     "type": "build",
-                    "name": "verify"
+                    "name": "debug"
                 },
                 {
                     "type": "test",
-                    "name": "verify"
+                    "name": "integration"
                 }
             ]
         },
