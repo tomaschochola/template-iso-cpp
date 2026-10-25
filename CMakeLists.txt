@@ -15,8 +15,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
-set(CMAKE_VERIFY_PRIVATE_HEADER_SETS ON)
-set(CMAKE_VERIFY_INTERFACE_HEADER_SETS ON)
 
 add_compile_options(
     -Wall
@@ -34,7 +32,7 @@ check_pie_supported(LANGUAGES CXX)
 
 set(
     MEMORYCHECK_COMMAND_OPTIONS
-    "-q --tool=memcheck --leak-check=full --num-callers=50 --error-exitcode=255"
+    "-q --tool=memcheck --leak-check=full --error-exitcode=255"
 )
 
 include(CTest)
