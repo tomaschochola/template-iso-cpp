@@ -4,7 +4,7 @@ project(
     template_iso_cpp
     VERSION 0.0.0
     SPDX_LICENSE "BSD-3-Clause"
-    DESCRIPTION "ISO C++23 application template with testing and sanitizers."
+    DESCRIPTION "github.com/tomaschochola/template-iso-cpp"
     HOMEPAGE_URL "https://github.com/tomaschochola/template-iso-cpp"
     LANGUAGES CXX
 )
