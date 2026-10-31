@@ -3,9 +3,9 @@
 namespace app
 {
 
-auto todo() noexcept -> int
-{
-    return 0;
-}
+    auto todo() noexcept -> int
+    {
+        return 0;
+    }
 
 } // namespace app

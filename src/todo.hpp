@@ -1,11 +1,8 @@
-#ifndef APP_TODO_HPP_INCLUDED
-#define APP_TODO_HPP_INCLUDED
+#pragma once
 
 namespace app
 {
 
-[[nodiscard]] auto todo() noexcept -> int;
+    [[nodiscard]] auto todo() noexcept -> int;
 
 } // namespace app
-
-#endif // APP_TODO_HPP_INCLUDED
