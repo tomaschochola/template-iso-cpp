@@ -1,7 +1,6 @@
 #pragma once
 
-namespace app
-{
+namespace app {
 
     [[nodiscard]] auto todo() noexcept -> int;
 

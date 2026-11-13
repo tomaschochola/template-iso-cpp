@@ -1,10 +1,8 @@
 #include "todo.hpp"
 
-namespace app
-{
+namespace app {
 
-    auto todo() noexcept -> int
-    {
+    auto todo() noexcept -> int {
         return 0;
     }
 
