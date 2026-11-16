@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 4.4)
 
 project(
-    template_iso_cpp
+    template-iso-cpp
     VERSION 0.0.0
     SPDX_LICENSE "BSD-3-Clause"
     DESCRIPTION "github.com/tomaschochola/template-iso-cpp"
     HOMEPAGE_URL "https://github.com/tomaschochola/template-iso-cpp"
-    LANGUAGES CXX
+    LANGUAGES
+        CXX
 )
 
 set(CMAKE_CXX_STANDARD 23)
@@ -23,12 +24,17 @@ add_compile_options(
     -pedantic-errors
 )
 
-add_compile_definitions(_GNU_SOURCE=1)
+add_compile_definitions(
+    _GNU_SOURCE=1
+)
 
 include(GNUInstallDirs)
 
 include(CheckPIESupported)
-check_pie_supported(LANGUAGES CXX)
+check_pie_supported(
+    LANGUAGES
+        CXX
+)
 
 set(MEMORYCHECK_COMMAND_OPTIONS "-q --tool=memcheck --leak-check=full --error-exitcode=255")
 
@@ -41,11 +47,12 @@ if(BUILD_TESTING)
 endif()
 
 install(
-    FILES LICENSE
-    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/doc/template-iso-cpp"
+    FILES
+        LICENSE
+    DESTINATION "${CMAKE_INSTALL_DOCDIR}"
 )
 
-set(CPACK_PACKAGE_NAME "template-iso-cpp")
+set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
 set(CPACK_PACKAGE_VENDOR "Tomáš Chochola")
 set(CPACK_GENERATOR "TGZ")
 set(CPACK_PACKAGE_CHECKSUM "SHA256")

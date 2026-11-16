@@ -1,13 +1,23 @@
+configure_file(
+    cli_config.hpp.in
+    ${CMAKE_CURRENT_BINARY_DIR}/cli_config.hpp
+    @ONLY
+)
+
 add_library(template_iso_cpp_core STATIC)
 
 target_sources(
     template_iso_cpp_core
     PRIVATE
-        todo.cpp
+        cli.cpp
     PUBLIC
         FILE_SET HEADERS
-        BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
-        FILES todo.hpp
+        BASE_DIRS
+            ${CMAKE_CURRENT_SOURCE_DIR}
+            ${CMAKE_CURRENT_BINARY_DIR}
+        FILES
+            cli.hpp
+            ${CMAKE_CURRENT_BINARY_DIR}/cli_config.hpp
 )
 
 add_executable(template_iso_cpp)
@@ -21,7 +31,7 @@ target_sources(
 set_target_properties(
     template_iso_cpp
     PROPERTIES
-        OUTPUT_NAME "template-iso-cpp"
+        OUTPUT_NAME "${PROJECT_NAME}"
 )
 
 target_link_libraries(
@@ -31,7 +41,8 @@ target_link_libraries(
 )
 
 install(
-    TARGETS template_iso_cpp
+    TARGETS
+        template_iso_cpp
     RUNTIME
     DESTINATION ${CMAKE_INSTALL_BINDIR}
 )

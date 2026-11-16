@@ -1,5 +1,8 @@
 function(add_project_test test target label)
-    add_executable(${target} ${ARGN})
+    add_executable(
+        ${target}
+        ${ARGN}
+    )
 
     target_compile_options(
         ${target}
@@ -15,7 +18,8 @@ function(add_project_test test target label)
 
     add_test(
         NAME ${test}
-        COMMAND ${target}
+        COMMAND
+            ${target}
     )
 
     set_tests_properties(
@@ -27,4 +31,9 @@ function(add_project_test test target label)
     )
 endfunction()
 
-add_project_test(unit.todo template_iso_cpp_tests unit test_todo.cpp)
+add_project_test(
+    unit.cli
+    template_iso_cpp_tests
+    unit
+    test_cli.cpp
+)
