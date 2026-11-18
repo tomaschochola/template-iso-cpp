@@ -6,6 +6,8 @@ configure_file(
 
 add_library(template_iso_cpp_core STATIC)
 
+target_link_libraries(template_iso_cpp_core PRIVATE project_compile_options)
+
 target_sources(
     template_iso_cpp_core
     PRIVATE
@@ -37,6 +39,7 @@ set_target_properties(
 target_link_libraries(
     template_iso_cpp
     PRIVATE
+        project_compile_options
         template_iso_cpp_core
 )
 
